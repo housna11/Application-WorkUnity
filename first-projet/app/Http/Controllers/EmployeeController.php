@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreemployeeRequest;
 use Illuminate\Http\Request;
 use App\Models\employe;
 
@@ -29,16 +30,12 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+   public function store(StoreemployeeRequest $request)
     {
-        $infos=$request->validate([
-            'nom'=>'required',
-            'prenom'=>'required',
-            'email'=>'required',
-            'poste'=>'required',
-        ]);
-        employe::create($infos);
-        return redirect()->route('accueil'); 
+        employe::create($request->validated());
+
+        return redirect('/')
+        ->with('success', 'Ajouté avec succès');
     }
 
     /**
@@ -66,7 +63,9 @@ class EmployeeController extends Controller
     {
         $employes=employe::findOrFail($id);
         $employes->update($request->all());
-        return redirect()->route('accueil');
+        return redirect('/')
+        ->with('success','Employé modifié !');
+
     }
 
     /**
@@ -76,6 +75,10 @@ class EmployeeController extends Controller
     {
         $employes=employe::findOrFail($id);
         $employes->delete();
-        return redirect('/');
+        return redirect('/')        
+        ->with('success','Employé supprimé');
+
     }
+
+    
 }

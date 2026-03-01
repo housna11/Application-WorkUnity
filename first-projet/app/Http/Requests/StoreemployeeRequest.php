@@ -22,7 +22,21 @@ class StoreemployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-        ];
+        'nom' => 'required|string|max:255',
+        'prenom' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'poste' => 'required|string|max:255',
+    ];
+    }
+
+    public function messages(): array
+    {
+    return [
+        'nom.required' => 'Le nom est obligatoire',
+        'prenom.required' => 'Le prénom est obligatoire',
+        'email.required' => 'L\'email est obligatoire',
+        'email.email' => 'Email invalide',
+        'poste.required' => 'Le poste est obligatoire',
+    ];
     }
 }
